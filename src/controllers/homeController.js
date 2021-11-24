@@ -23,7 +23,8 @@ let getCRUD = (req, res) => {
 let postCRUD = async (req, res) => {
   let message = await CRUDService.createNewUser(req.body);
   console.log(message);
-  return res.send("post data to server sucessfully!!");
+  res.writeHead(301, { Location: "http://localhost:8080/get-crud" });
+  res.end();
 };
 
 let displayGetCRUD = async (req, res) => {
@@ -59,6 +60,13 @@ let putCRUD = async (req, res) => {
   res.end();
 };
 
+let deleteCRUD = async (req, res) => {
+  let id = req.query.id;
+  await CRUDService.deleteUserById(id);
+  res.writeHead(301, { Location: "http://localhost:8080/get-crud" });
+  res.end();
+};
+
 module.exports = {
   getHomePage: getHomePage,
   getAboutPage: getAboutPage,
@@ -67,4 +75,5 @@ module.exports = {
   displayGetCRUD: displayGetCRUD,
   getEditCRUD: getEditCRUD,
   putCRUD: putCRUD,
+  deleteCRUD: deleteCRUD,
 };
